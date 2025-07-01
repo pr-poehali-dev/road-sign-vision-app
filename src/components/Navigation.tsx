@@ -1,10 +1,12 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 
-const Navigation = () => {
-  const [activeTab, setActiveTab] = useState("dashboard");
+interface NavigationProps {
+  currentPage: string;
+  onPageChange: (page: string) => void;
+}
 
+const Navigation = ({ currentPage, onPageChange }: NavigationProps) => {
   const navItems = [
     { id: "dashboard", label: "Главная", icon: "Monitor" },
     { id: "recognition", label: "Распознавание", icon: "Camera" },
@@ -35,13 +37,13 @@ const Navigation = () => {
         {navItems.map((item) => (
           <Button
             key={item.id}
-            variant={activeTab === item.id ? "default" : "ghost"}
+            variant={currentPage === item.id ? "default" : "ghost"}
             className={`w-full justify-start gap-3 h-12 ${
-              activeTab === item.id
+              currentPage === item.id
                 ? "bg-tech-primary text-white hover:bg-tech-primary/90"
                 : "text-tech-gray hover:text-white hover:bg-tech-gray/10"
             }`}
-            onClick={() => setActiveTab(item.id)}
+            onClick={() => onPageChange(item.id)}
           >
             <Icon name={item.icon as any} size={20} />
             {item.label}
